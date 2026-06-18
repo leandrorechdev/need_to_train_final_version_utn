@@ -1,0 +1,246 @@
+import { getLocales } from "expo-localization";
+import { I18n } from "i18n-js";
+
+export const translations = {
+    // Castellano (es)
+    es: {
+        home: {
+            title: "INICIO",
+            welcome: "¡Te damos la bienvenida!",
+            needToTrain: "Need to Train",
+            buildWeeklyPlan: "Arma tu plan semanal",
+            subtitle: "Rutina del Día / Pasos Diarios",
+            steps: "Pasos Diarios",
+            todayWorkout: "Rutina de Hoy",
+            noWorkout: "Descanso total. O a escuchar un buen punk rock. ⚡",
+        },
+        calendar: {
+            title: "NEED TO TRAIN 🎸",
+            planDay: "PLANIFICAR {{day}}",
+            placeholderWorkout: "Ej: Correr 5k / Fierros Pecho",
+            placeholderLink: "Link de YouTube (Opcional)",
+            addButton: "➕ AGREGAR AL PLAN",
+            sectionHeader: "RUTINA DEL DÍA",
+            youtubeButton: "📺 ENLACE DE ENTRENAMIENTO",
+            loading: "CARGANDO RUTINA...",
+            youtubeTitle: "BUSCADOR YOUTUBE 🔍",
+            useWorkoutButton: "⚡ USAR ESTE ENTRENAMIENTO",
+            noWorkouts: "Descanso total. O a escuchar un buen punk rock. ⚡",
+        },
+        days: {
+            Monday: "Lunes",
+            Tuesday: "Martes",
+            Wednesday: "Miércoles",
+            Thursday: "Jueves",
+            Friday: "Viernes",
+            Saturday: "Sábado",
+            Sunday: "Domingo",
+            monday: "Lunes",
+            tuesday: "Martes",
+            wednesday: "Miércoles",
+            thursday: "Jueves",
+            friday: "Viernes",
+            saturday: "Sábado",
+            sunday: "Domingo",
+        },
+        auth: {
+            loginTitle: "Iniciar Sesión",
+            registerTitle: "Crear Cuenta",
+            emailPlaceholder: "Correo electrónico",
+            passwordPlaceholder: "Contraseña",
+            loginBtn: "Ingresar",
+            registerBtn: "Registrarse",
+            toRegisterLink: "¿No tienes cuenta? Regístrate aquí",
+            toLoginLink: "¿Ya tienes cuenta? Inicia sesión",
+            errorTitle: "Error",
+            successTitle: "¡Éxito!",
+            successLogin: "¡Bienvenido de nuevo, {{name}}!",
+            successRegister: "¡Bienvenido, {{name}}! Tu cuenta ha sido creada.",
+            errorWeakPassword:
+                "La contraseña es muy débil. Usa al menos 6 caracteres.",
+            errorInvalidEmail:
+                "El formato del correo electrónico no es válido.",
+            errorInvalidCredential: "Correo o contraseña incorrectos.",
+            errorEmailInUse: "Este correo ya está registrado.",
+            errorNetwork: "Error de conexión. Revisa tu internet.",
+            errorDefault: "Ocurrió un error inesperado. Intenta de nuevo.",
+        },
+        profile: {
+            athleteData: "DATOS DEL ATLETA",
+            username: "Nombre de Usuario",
+            placeholderName: "Tu nombre",
+            fitnessGoal: "Objetivo Fitness",
+            placeholderGoal: "Ej: Hipertrofia / Running 10k",
+            saveBtn: "GUARDAR CAMBIOS",
+            successTitle: "¡Éxito!",
+            successSave: "Datos del atleta guardados correctamente.",
+            logoutTitle: "Cerrar Sesión",
+            logoutConfirm: "¿Estás seguro de que querés salir de la app?",
+            logoutBtn: "CERRAR SESIÓN",
+        },
+        common: {
+            cancel: "Cancelar",
+            exit: "Salir",
+        },
+        workout: {
+            formTitle: "REGISTRAR ENTRENAMIENTO",
+            exercisePlaceholder: "Nombre del ejercicio...",
+            youtubePlaceholder: "Link de YouTube...",
+            saveBtn: "GUARDAR EN FIREBASE",
+            successSave: "¡Guardado correctamente!",
+            errorSave: "No se pudo guardar.",
+            errorAuth: "Debes iniciar sesión.",
+            pasadas: "PASADAS",
+            fondo: "FONDO",
+            alargue: "ALARGUE",
+            gymTitle: "NUEVO EJERCICIO GYM 🏋️‍♂️",
+            runnerTitle: "PLAN RUNNING 跑 🏃‍♂️",
+            modalTitle: "SELECCIONAR TIPO DE TRABAJO",
+        },
+        youtube: {
+            title: "BUSCADOR YOUTUBE 🔍",
+            freeSearchBtn: "NAVEGAR YOUTUBE LIBRE",
+            filterPlaceholder: "Filtrar por categoría (ej: Cardio)...",
+            successTitle: "¡Excelente!",
+            successSubtitle: "Rutina agendada.",
+            btnWatch: "VER EN YT",
+            btnSelect: "ELEGIR RUTINA",
+            errorTitle: "Error",
+            errorVideoOpen: "No se pudo abrir el video",
+        },
+        drawer: {
+            dashboard: "Panel Principal 🏠",
+            profile: "Mi Perfil 👤",
+        },
+    },
+
+    // Inglés Británico (en)
+    en: {
+        home: {
+            title: "HOME",
+            welcome: "Welcome!",
+            needToTrain: "Need to Train",
+            buildWeeklyPlan: "Build your weekly plan",
+            subtitle: "Today's Programme / Daily Steps",
+            steps: "Daily Steps",
+            todayWorkout: "Today's Programme",
+            noWorkout: "Total rest day. Splendid time for some punk rock. ⚡",
+        },
+        calendar: {
+            title: "NEED TO TRAIN 🎸",
+            planDay: "PLAN {{day}}",
+            placeholderWorkout: "e.g., 5k Run / Heavy Chest Day",
+            placeholderLink: "YouTube Link (Optional)",
+            addButton: "➕ ADD TO PLAN",
+            sectionHeader: "TODAY'S ROUTINE",
+            youtubeButton: "📺 TRAINING LINK",
+            loading: "LOADING ROUTINE...",
+            youtubeTitle: "YOUTUBE FINDER 🔍",
+            useWorkoutButton: "⚡ USE THIS PROGRAMME",
+            noWorkouts: "Total rest day. Splendid time for some punk rock. ⚡",
+        },
+        days: {
+            Monday: "Monday",
+            Tuesday: "Tuesday",
+            Wednesday: "Wednesday",
+            Thursday: "Thursday",
+            Friday: "Friday",
+            Saturday: "Saturday",
+            Sunday: "Sunday",
+            monday: "Monday",
+            tuesday: "Tuesday",
+            wednesday: "Wednesday",
+            thursday: "Thursday",
+            friday: "Friday",
+            saturday: "Saturday",
+            sunday: "Sunday",
+        },
+        auth: {
+            loginTitle: "Sign In",
+            registerTitle: "Create Account",
+            emailPlaceholder: "Email address",
+            passwordPlaceholder: "Password",
+            loginBtn: "Login",
+            registerBtn: "Sign Up",
+            toRegisterLink: "Don't have an account? Sign up here",
+            toLoginLink: "Already have an account? Sign in",
+            errorTitle: "Error",
+            successTitle: "Success!",
+            successLogin: "Welcome back, {{name}}!",
+            successRegister:
+                "Welcome, {{name}}! Your account has been created.",
+            errorWeakPassword:
+                "Password is too weak. Use at least 6 characters.",
+            errorInvalidEmail: "Invalid email format.",
+            errorInvalidCredential: "Invalid email or password.",
+            errorEmailInUse: "This email is already in use.",
+            errorNetwork: "Network error. Please check your connection.",
+            errorDefault: "An unexpected error occurred. Please try again.",
+        },
+        profile: {
+            athleteData: "ATHLETE PROFILE",
+            username: "Username",
+            placeholderName: "Your name",
+            fitnessGoal: "Fitness Goal",
+            placeholderGoal: "e.g., Hypertrophy",
+            saveBtn: "SAVE CHANGES",
+            successTitle: "Success!",
+            successSave: "Athlete details updated successfully.",
+            logoutTitle: "Sign Out",
+            logoutConfirm: "Are you sure you want to sign out?",
+            logoutBtn: "SIGN OUT",
+        },
+        common: {
+            cancel: "Cancel",
+            exit: "Exit",
+        },
+        workout: {
+            formTitle: "RECORD WORKOUT",
+            exercisePlaceholder: "Exercise name...",
+            youtubePlaceholder: "YouTube Link...",
+            saveBtn: "SAVE TO FIREBASE",
+            successSave: "Saved successfully!",
+            errorSave: "Could not save.",
+            errorAuth: "You must be logged in.",
+            pasadas: "INTERVALS",
+            fondo: "LONG RUN",
+            alargue: "STRIDES",
+            gymTitle: "ADD GYM WORKOUT 🏋️‍♂️",
+            runnerTitle: "RUNNING SCHEDULE 🏃‍♂️",
+            modalTitle: "SELECT WORKOUT TYPE",
+
+        },
+        youtube: {
+            title: "YOUTUBE FINDER 🔍",
+            freeSearchBtn: "BROWSE FREE YOUTUBE",
+            filterPlaceholder: "Filter routine...",
+            successTitle: "Success!",
+            successSubtitle: "Workout scheduled.",
+            btnWatch: "WATCH",
+            btnSelect: "SELECT",
+            errorTitle: "Error",
+            errorVideoOpen: "Could not open the video",
+        },
+        drawer: {
+            dashboard: "Main Dashboard 🏠",
+            profile: "My Profile 👤",
+        },
+    },
+};
+
+// Inicializamos i18n
+export const i18n = new I18n(translations);
+
+// Detectar el idioma del dispositivo del usuario de forma nativa (con fallback seguro)
+const deviceLanguage = getLocales()[0]?.languageCode ?? "es";
+
+// Seteamos el idioma por defecto
+i18n.locale = deviceLanguage;
+
+// Permitir que el sistema use sub-idiomas
+i18n.enableFallback = true;
+
+// Forzar el cambio de idioma global
+export const changeAppLanguage = (lang: "es" | "en") => {
+    i18n.locale = lang;
+};
