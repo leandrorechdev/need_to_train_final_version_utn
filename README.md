@@ -102,7 +102,7 @@ El proyecto está construido sobre un stack moderno y escalable diseñado para d
 **Clonar el repositorio:**
 
 ```bash
-git clone 
+git clone https://github.com/leandrorechdev/need_to_train_final_version_utn.git
 ```
 
 ## 🚀 Instalación y Ejecución
