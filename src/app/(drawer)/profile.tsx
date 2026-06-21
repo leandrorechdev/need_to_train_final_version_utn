@@ -1,22 +1,25 @@
-import { auth } from "@/config/firebase"
-import { MaterialIcons } from "@expo/vector-icons"
-import { signOut } from "firebase/auth"
-import { useState } from "react"
+import { auth } from "@/config/firebase";
+import { MaterialIcons } from "@expo/vector-icons";
+import { signOut } from "firebase/auth";
+import { useState } from "react";
 import {
     Alert,
+    Image,
     ScrollView,
     Text,
     TextInput,
     TouchableOpacity,
     View,
-} from "react-native"
+} from "react-native";
 
 // Tus componentes y hooks personalizados
-import AccessibilityHeader from "@/components/AccessibilityHeader"
-import { getFormStyles } from "@/constants/styles"
-import { useModal } from "@/context/ModalContext"
-import { useAppTheme } from "@/hooks/useAppTheme"
-import { useTranslation } from "@/hooks/useTranslation"
+import AccessibilityHeader from "@/components/AccessibilityHeader";
+import { getFormStyles } from "@/constants/styles";
+import { useModal } from "@/context/ModalContext";
+import { useAppTheme } from "@/hooks/useAppTheme";
+import { useTranslation } from "@/hooks/useTranslation";
+import * as ImagePicker from "expo-image-picker";
+import { router } from "expo-router";
 
 export default function ProfileScreen() {
     const colors = useAppTheme();
@@ -31,6 +34,39 @@ export default function ProfileScreen() {
             "",
     );
     const [objetivo, setObjetivo] = useState("");
+    const [image, setImage] = useState<string | null>(null); // Creamos un estado que guarda la URI (la dirección local de la foto).
+
+    const pickImage = async () => {
+        const { status } =
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (status !== "granted") {
+            showModal(
+                t("profile.permissionDenied"),
+                t("profile.permissionMessage"),
+                () => {},
+                "error",
+            );
+            return;
+        }
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images"],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.5,
+        });
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+            showModal(
+                t("profile.successTitlePhoto"),
+                t("profile.photoUpdated"),
+                () => {},
+                "success",
+            );
+        }
+    };
 
     const handleLogout = () => {
         Alert.alert(t("profile.logoutTitle"), t("profile.logoutConfirm"), [
@@ -67,6 +103,36 @@ export default function ProfileScreen() {
             <AccessibilityHeader />
 
             <View style={{ padding: 20 }}>
+                {/* Selector de Foto */}
+                <View style={styles.profileImageContainer}>
+                    <TouchableOpacity
+                        onPress={pickImage}
+                        style={styles.profileImageButton}
+                    >
+                        {image ? (
+                            <Image
+                                source={{ uri: image }}
+                                style={styles.profileImage}
+                            />
+                        ) : (
+                            <View
+                                style={[
+                                    styles.profilePlaceholder,
+                                    { backgroundColor: colors.border },
+                                ]}
+                            >
+                                <MaterialIcons
+                                    name="camera-alt"
+                                    size={40}
+                                    color={colors.textMuted}
+                                />
+                            </View>
+                        )}
+                    </TouchableOpacity>
+                    <Text style={{ marginTop: 10, color: colors.textMuted }}>
+                        {t("profile.changePhoto")}
+                    </Text>
+                </View>
                 <View style={styles.sectionCard}>
                     <Text style={styles.sectionLabel}>
                         {t("profile.athleteData")}

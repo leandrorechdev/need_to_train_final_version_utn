@@ -5,9 +5,12 @@ import {
     collection,
     getDocs,
     serverTimestamp,
+    query,
+    where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+    Animated,
     ActivityIndicator,
     FlatList,
     Linking,
@@ -48,15 +51,26 @@ export default function YoutubeScreen() {
     const { locale } = useLanguage();
     const router = useRouter();
     const { dayKey } = useLocalSearchParams<{ dayKey: string }>(); // día de la semana
-
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
     const [modalVisible, setModalVisible] = useState(false); // YoutubeBrowserModal
+    const fadeAnim = useRef(new Animated.Value(0)).current; // animación de opacidad
+    const [results, setResults] = useState<Video[]>([]); // inicializa vacío
+    const t = (key: string) => i18n.t(key, { locale });
+
+    // apertura y cierre con animación
+    const toggleModal = (visible: boolean) => {
+        Animated.timing(fadeAnim, {
+            toValue: visible ? 0.4 : 0, // nivel de opacidad
+            duration: 250,
+            useNativeDriver: true,
+        }).start();
+
+        setModalVisible(visible);
+    };
+
     const { showModal } = useModal(); // modal de alertas propio
-
-    // 1. Inicializa vacío
-    const [results, setResults] = useState<Video[]>([]);
-
     useEffect(() => {
         const fetchVideos = async () => {
             setIsLoading(true);
@@ -87,23 +101,20 @@ export default function YoutubeScreen() {
         fetchVideos();
     }, []);
 
-    const t = (key: string) => i18n.t(key, { locale });
-
     // lo vamos a tener de respaldo por si no carga Firebase
     const handleSearch = () => {
         if (!searchQuery.trim()) {
             setResults(VIDEOS_REALES);
             return;
         }
-        const filtered = VIDEOS_REALES.filter((v) => {
-            const currentTitle = locale === "es" ? v.titleEs : v.titleEn;
-            return (
-                currentTitle
+        const query = searchQuery.toLowerCase();
+        const filtered = VIDEOS_REALES.filter(
+            (v) =>
+                (locale === "es" ? v.titleEs : v.titleEn)
                     .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
-                v.category.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        });
+                    .includes(query) ||
+                v.category.toLowerCase().includes(query),
+        );
         setResults(filtered);
     };
 
@@ -119,6 +130,8 @@ export default function YoutubeScreen() {
         );
     };
     const handleSelectWorkout = async (title: string, videoUrl: string) => {
+        console.log("Iniciando handleSelectWorkout para:", title);
+
         const user = auth.currentUser;
         // Usamos el modal para el error de auth(si no existe usuario)
         if (!user)
@@ -129,7 +142,32 @@ export default function YoutubeScreen() {
                 "error",
             );
 
+        // 1. Candado para evitar múltiples clicks
+        if (isSaving) return;
+        setIsSaving(true);
+
         try {
+            // 1. VALIDACIÓN: Primero comprobamos si ya existe (dentro del mismo try)
+            const q = query(
+                collection(db, "workouts"),
+                where("userId", "==", user.uid),
+                where("day", "==", dayKey || "monday"),
+                where("youtubeUrl", "==", videoUrl),
+            );
+
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                // Si el video ya existe, avisamos y salimos
+                showModal(
+                    t("youtube.errorTitle"),
+                    "Este video ya está agendado para este día.",
+                    () => {},
+                    "error",
+                );
+                setIsSaving(false);
+                return;
+            }
             await addDoc(collection(db, "workouts"), {
                 userId: user.uid,
                 type: "youtube",
@@ -161,6 +199,13 @@ export default function YoutubeScreen() {
 
     return (
         <ScreenWrapper withScroll={false}>
+            <Animated.View
+                pointerEvents={modalVisible ? "auto" : "none"}
+                style={[
+                    StyleSheet.absoluteFill,
+                    { backgroundColor: "black", opacity: fadeAnim, zIndex: 10 },
+                ]}
+            />
             <View style={styles.mainLayoutContainer}>
                 <View style={localStyles.headerSpacingWrapper}>
                     <AccessibilityHeader showBackButton={true} />
@@ -173,7 +218,7 @@ export default function YoutubeScreen() {
                         localStyles.btnFreeSearch,
                         { backgroundColor: colors.secondaryAccent },
                     ]}
-                    onPress={() => setModalVisible(true)}
+                    onPress={() => setModalVisible(true)}// abre el modal
                     activeOpacity={0.8}
                 >
                     <MaterialCommunityIcons
@@ -204,13 +249,13 @@ export default function YoutubeScreen() {
                         style={[localStyles.inputField, { color: colors.text }]}
                         placeholder={t("youtube.filterPlaceholder")}
                         placeholderTextColor={colors.textMuted}
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                        onSubmitEditing={handleSearch}
+                        value={searchQuery}// Lo que el usuario escribe se guarda en este estado.
+                        onChangeText={setSearchQuery}// Cada vez que el usuario toca una tecla, el estado se actualiza.
+                        onSubmitEditing={handleSearch}// Cuando el usuario presiona "Enter" en el teclado, dispara la búsqueda.
                         returnKeyType="search"
                     />
                     <TouchableOpacity
-                        onPress={handleSearch}
+                        onPress={handleSearch}// El ícono de la lupa que también dispara la función de búsqueda.
                         style={localStyles.searchIconInside}
                     >
                         <MaterialIcons
@@ -250,7 +295,10 @@ export default function YoutubeScreen() {
                                     </Text>
                                 </View>
 
-                                <Text style={styles.ytVideoTitle} numberOfLines={2}>
+                                <Text
+                                    style={styles.ytVideoTitle}
+                                    numberOfLines={2}
+                                >
                                     {/* 1. Si el video es capturado del modal, tendrá la propiedad 'text' */}
                                     {item.type === "youtube" && item.text
                                         ? item.text
@@ -295,7 +343,7 @@ export default function YoutubeScreen() {
 
             <YoutubeBrowserModal
                 visible={modalVisible}
-                onClose={() => setModalVisible(false)}
+                onClose={() => toggleModal(false)}
                 onSelectVideo={handleSelectWorkout}
             />
         </ScreenWrapper>

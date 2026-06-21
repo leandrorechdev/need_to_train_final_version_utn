@@ -3,9 +3,8 @@ import { AppTheme } from "./theme";
 
 export const getFormStyles = (colors: AppTheme) =>
     StyleSheet.create({
-    
         // CONTENEDORES PRINCIPALES Y LOGIN
-        
+
         container: {
             flex: 1,
             justifyContent: "center",
@@ -40,20 +39,20 @@ export const getFormStyles = (colors: AppTheme) =>
             height: 50,
             backgroundColor: colors.card,
             borderColor: colors.border,
-            overflow: "hidden", 
+            overflow: "hidden",
         },
-        passwordInput: { 
-            flex: 1, 
-            padding: 15, 
+        passwordInput: {
+            flex: 1,
+            padding: 15,
             fontSize: 16,
             color: colors.text,
-            backgroundColor: "transparent", 
+            backgroundColor: "transparent",
         },
-        eyeIcon: { 
+        eyeIcon: {
             paddingHorizontal: 15,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "transparent", 
+            backgroundColor: "transparent",
             height: "100%",
         },
         button: {
@@ -64,29 +63,54 @@ export const getFormStyles = (colors: AppTheme) =>
             elevation: 3,
             backgroundColor: colors.accent,
         },
-        buttonText: { 
-            color: colors.buttonText, 
-            fontSize: 16, 
+        buttonText: {
+            color: colors.buttonText,
+            fontSize: 16,
             fontWeight: "900",
-            letterSpacing: 0.5
+            letterSpacing: 0.5,
         },
-        linkContainer: { 
-            marginTop: 25, 
-            alignItems: "center" 
+        linkContainer: {
+            marginTop: 25,
+            alignItems: "center",
         },
-        linkText: { 
+        linkText: {
             fontSize: 14,
             fontWeight: "700",
             color: colors.accent,
         },
 
-    
+        // PERFIL USUARIO
+        profileImageContainer: {
+            alignItems: "center",
+            marginBottom: 20,
+        },
+        profileImageButton: {
+            borderRadius: 75,
+            overflow: "hidden",
+            borderWidth: 2,
+            borderColor: colors.border,
+        },
+        profileImage: {
+            width: 150,
+            height: 150,
+        },
+        profilePlaceholder: {
+            width: 150,
+            height: 150,
+            borderRadius: 75,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: colors.card,
+            borderWidth: 1,
+            borderColor: colors.border,
+        },
+
         // (GYM & RUNNER)
-        
-        formContainer: { 
-            gap: 20, 
+
+        formContainer: {
+            gap: 20,
             marginTop: 15,
-            paddingHorizontal: 4 
+            paddingHorizontal: 4,
         },
         sectionCard: {
             backgroundColor: colors.card,
@@ -124,10 +148,10 @@ export const getFormStyles = (colors: AppTheme) =>
             marginLeft: 2,
             color: colors.text,
         },
-        btnSave: { 
-            padding: 16, 
-            borderRadius: 14, 
-            alignItems: "center", 
+        btnSave: {
+            padding: 16,
+            borderRadius: 14,
+            alignItems: "center",
             marginTop: 10,
             elevation: 4,
             shadowColor: colors.text,
@@ -136,15 +160,14 @@ export const getFormStyles = (colors: AppTheme) =>
             shadowRadius: 4,
             backgroundColor: colors.text,
         },
-        btnSaveText: { 
-            fontWeight: "900", 
-            fontSize: 14, 
+        btnSaveText: {
+            fontWeight: "900",
+            fontSize: 14,
             letterSpacing: 1,
             color: colors.background,
         },
 
-    
-        // BUSCADOR Y TARJETAS DE YOUTUBE 
+        // BUSCADOR Y TARJETAS DE YOUTUBE
 
         mainLayoutContainer: {
             flex: 1,
@@ -160,23 +183,23 @@ export const getFormStyles = (colors: AppTheme) =>
             backgroundColor: colors.card,
             borderColor: colors.border,
         },
-        ytCardHeader: { 
-            flexDirection: "row", 
-            alignItems: "center", 
-            marginBottom: 8 
+        ytCardHeader: {
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 8,
         },
-        ytChannelText: { 
-            fontSize: 12, 
-            fontWeight: "600", 
+        ytChannelText: {
+            fontSize: 12,
+            fontWeight: "600",
             marginLeft: 6,
-            color: colors.textMuted
+            color: colors.textMuted,
         },
         ytVideoTitle: {
             fontSize: 14,
             fontWeight: "800",
             lineHeight: 20,
             marginBottom: 14,
-            color: colors.text 
+            color: colors.text,
         },
         ytActionsRow: {
             flexDirection: "row",
@@ -193,10 +216,10 @@ export const getFormStyles = (colors: AppTheme) =>
             borderColor: colors.secondaryAccent,
             backgroundColor: "transparent",
         },
-        ytBtnSecondaryText: { 
-            fontSize: 11, 
+        ytBtnSecondaryText: {
+            fontSize: 11,
             fontWeight: "900",
-            color: colors.secondaryAccent
+            color: colors.secondaryAccent,
         },
         ytBtnPrimary: {
             flex: 1.2,
@@ -207,23 +230,22 @@ export const getFormStyles = (colors: AppTheme) =>
             elevation: 1,
             backgroundColor: colors.accent,
         },
-        ytBtnPrimaryText: { 
-            fontSize: 11, 
+        ytBtnPrimaryText: {
+            fontSize: 11,
             fontWeight: "900",
-            color: colors.buttonText // 🌟 Blanco en modo oscuro / Color correcto en modo claro
+            color: colors.buttonText, // 🌟 Blanco en modo oscuro / Color correcto en modo claro
         },
 
-        
         // ACCIONES DESTRUCTORAS(borrado, etc)
-        
+
         btnDelete: {
             padding: 16,
             borderRadius: 14,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#ff3b30",
-            marginTop: 28,       
-            marginBottom: 30,    
+            marginTop: 28,
+            marginBottom: 30,
             elevation: 3,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },

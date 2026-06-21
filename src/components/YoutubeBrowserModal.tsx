@@ -37,6 +37,7 @@ export default function YoutubeBrowserModal({
     const [currentUrl, setCurrentUrl] = useState("https://m.youtube.com");
     const [currentTitle, setCurrentTitle] = useState("");
     const [isVideo, setIsVideo] = useState(false);
+    const [isCapturing, setIsCapturing] = useState(false);
 
     // Fábrica de estilos optimizada (sin recrear el objeto si no cambian los colores)
     const styles = useMemo(
@@ -49,38 +50,33 @@ export default function YoutubeBrowserModal({
             // cuando el modal se cierra
             setCurrentUrl("https://m.youtube.com"); // vuelve a la pag principal
             setCurrentTitle(""); // borra el título del video anterior
-            setIsVideo(false); // ocualta el botón de "elegir este"
+            setIsVideo(false); // oculta el botón de "elegir este"
         }
     }, [visible]); // disparador(cada vez que cambia)
 
-    const handleNavigationStateChange = useCallback(
-        (navState: any) => {
-            if (navState.url && currentUrl !== navState.url) {
-                setCurrentUrl(navState.url);
-                const isYouTubeVideo =
-                    navState.url.includes("watch?v=") ||
-                    navState.url.includes("youtu.be/");
-                setIsVideo(isYouTubeVideo); // actualiza y aparece el botón de "elegir este"
-            }
-            if (
-                navState.title &&
-                navState.title !== "YouTube" &&
-                !navState.title.includes("m.youtube")
-            ) {
-                // filtramos
-                setCurrentTitle(navState.title); // si el título tiene sentido lo guardamos acá
-            }
-        },
-        [currentUrl],
-    ); // detecta cambios en la navegación
+    const handleNavigationStateChange = (navState: any) => {
+        setCurrentUrl(navState.url);
+        const isYouTubeVideo =
+            navState.url.includes("watch?v=") ||
+            navState.url.includes("youtu.be/");
+        setIsVideo(isYouTubeVideo);
+    };
 
+    // handleCapture: El "Botón de Guardar"
     const handleCapture = useCallback(() => {
+        if (isCapturing) return; // Si ya se está capturando, no hacer nada más
+        setIsCapturing(true);
+
         const isValidUrl = /^(https?:\/\/)/i.test(currentUrl); // reg exp
         if (isValidUrl) {
-            const finalTitle =
-                currentTitle.trim() || t("calendar.youtubeTitle");
+            const finalTitle = t("calendar.defaultVideoName");
+
             onSelectVideo(finalTitle, currentUrl); // callback para darle título y url al padre
             onClose(); // cierre automático después de elegir
+        } else {
+            setIsCapturing(false); // Liberar si algo falla
+            // Opcional: Feedback si la URL no es válida (ej: si está en la página de login de YT)
+            console.warn("URL no válida para captura");
         }
     }, [currentUrl, currentTitle, onSelectVideo, onClose, t]); // se actualiza si cambia algo
 
@@ -131,6 +127,7 @@ export default function YoutubeBrowserModal({
                         domStorageEnabled={true}
                         javaScriptEnabled={true}
                         startInLoadingState={true}
+                        allowsInlineMediaPlayback={true}
                         nestedScrollEnabled={true} // clave para scroll ordenado
                         renderLoading={() => (
                             <View style={styles.loaderContainer}>

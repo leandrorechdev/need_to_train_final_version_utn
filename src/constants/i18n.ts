@@ -8,12 +8,13 @@ export const translations = {
             title: "INICIO",
             welcome: "¡Te damos la bienvenida!",
             needToTrain: "Need to Train",
-            buildWeeklyPlan: "Arma tu plan semanal",
+            buildWeeklyPlan: "Armá tu plan semanal",
             subtitle: "Rutina del Día / Pasos Diarios",
             steps: "Pasos Diarios",
             todayWorkout: "Rutina de Hoy",
             noWorkout: "Descanso total. O a escuchar un buen punk rock. ⚡",
         },
+
         calendar: {
             title: "NEED TO TRAIN 🎸",
             planDay: "PLANIFICAR {{day}}",
@@ -26,6 +27,8 @@ export const translations = {
             youtubeTitle: "BUSCADOR YOUTUBE 🔍",
             useWorkoutButton: "⚡ USAR ESTE ENTRENAMIENTO",
             noWorkouts: "Descanso total. O a escuchar un buen punk rock. ⚡",
+            detectedVideoLabel: "Video Detectado:",
+            defaultVideoName: "Video de YouTube",
         },
         days: {
             Monday: "Lunes",
@@ -77,6 +80,14 @@ export const translations = {
             logoutTitle: "Cerrar Sesión",
             logoutConfirm: "¿Estás seguro de que querés salir de la app?",
             logoutBtn: "CERRAR SESIÓN",
+            backToCalendar: "Ir al Calendario",
+            // CLAVES CORREGIDAS (Inglés)
+            changePhoto: "Cambiar foto de perfil",
+            permissionDenied: "Permiso denegado",
+            permissionMessage:
+                "Necesitamos acceso a tus fotos para personalizar tu perfil.",
+            successTitlePhoto: "¡Genial!",
+            photoUpdated: "Foto actualizada correctamente.",
         },
         common: {
             cancel: "Cancelar",
@@ -138,6 +149,8 @@ export const translations = {
             youtubeTitle: "YOUTUBE FINDER 🔍",
             useWorkoutButton: "⚡ USE THIS PROGRAMME",
             noWorkouts: "Total rest day. Splendid time for some punk rock. ⚡",
+            detectedVideoLabel: "Video Detected:",
+            defaultVideoName: "YouTube Video",
         },
         days: {
             Monday: "Monday",
@@ -189,6 +202,14 @@ export const translations = {
             logoutTitle: "Sign Out",
             logoutConfirm: "Are you sure you want to sign out?",
             logoutBtn: "SIGN OUT",
+            backToCalendar: "Go to Calendar",
+            // NUEVAS CLAVES:
+            changePhoto: "Change profile photo",
+            permissionDenied: "Permission denied",
+            permissionMessage:
+                "We need access to your photos to personalize your profile.",
+            successTitlePhoto: "Great!",
+            photoUpdated: "Photo updated successfully.",
         },
         common: {
             cancel: "Cancel",
@@ -208,7 +229,6 @@ export const translations = {
             gymTitle: "ADD GYM WORKOUT 🏋️‍♂️",
             runnerTitle: "RUNNING SCHEDULE 🏃‍♂️",
             modalTitle: "SELECT WORKOUT TYPE",
-
         },
         youtube: {
             title: "YOUTUBE FINDER 🔍",

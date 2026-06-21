@@ -54,8 +54,8 @@ export default function CalendarMainScreen() {
         if (!user) return;
 
         const q = query(
-            collection(db, "workouts"),
-            where("userId", "==", user.uid),
+            collection(db, "workouts"),// traemos los workouts
+            where("userId", "==", user.uid),// donde el userid coincide con el usuario logueado
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -66,7 +66,7 @@ export default function CalendarMainScreen() {
             setWorkouts(list);
         });
 
-        return () => unsubscribe();
+        return () => unsubscribe();// si el user cierra o sale de la app esto corta la conexion con firebase
     }, []);
 
     const handleDelete = async (id: string) => {
@@ -92,8 +92,8 @@ export default function CalendarMainScreen() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 40 }}
             >
-                {diasSemana.map((dia) => {
-                    const entrenamientosDelDia = workouts.filter((w) => w.day === dia.key);
+                {diasSemana.map((dia) => {// crea una dayCard por cada día de la semana
+                    const entrenamientosDelDia = workouts.filter((w) => w.day === dia.key);// filtramos los ejercicios de cada día
 
                     return (
                         <View
@@ -107,9 +107,9 @@ export default function CalendarMainScreen() {
                                 <TouchableOpacity
                                     style={[localStyles.addButton, { backgroundColor: colors.accent }]}
                                     onPress={() => {
-                                        console.log("Botón presionado, día:", dia.key); // ¿Aparece esto en tu terminal al hacer clic?
-                                        setSelectedDayKey(dia.key);
-                                        setShowOptionsPanel(true);
+                                        console.log("Botón presionado, día:", dia.key); 
+                                        setSelectedDayKey(dia.key);// guardamos el día seleccionado
+                                        setShowOptionsPanel(true);// abre WorkoutOptionsPanel
                                     }}
                                 >
                                     <MaterialIcons name="add" size={20} color={colors.buttonText} />
@@ -139,7 +139,7 @@ export default function CalendarMainScreen() {
             {/* Panel flotante (Modal) posicionado fuera del flujo del scroll */}
             <WorkoutOptionsPanel
                 visible={showOptionsPanel}
-                onClose={() => setShowOptionsPanel(false)}
+                onClose={() => setShowOptionsPanel(false)}// esto en el botón pasa a true
                 selectedDayKey={selectedDayKey}
                 locale={locale}
                 colors={colors}

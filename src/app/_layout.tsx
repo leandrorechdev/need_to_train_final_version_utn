@@ -52,7 +52,7 @@ function RootLayoutNav() {
         if (initializing) return;
 
         // SEGURO DE NAVEGACIÓN: 
-        // Si el modal está visible, no redireccionamos automáticamente para evitar el brinco.
+        // Si el modal está visible, no redireccionamos automáticamente para evitar el saltito.
         if (modalConfig.visible) return;
 
         const inAuthGroup = segments[0] === "login" || segments[0] === "register";
