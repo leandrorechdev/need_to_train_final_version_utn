@@ -8,7 +8,7 @@ export const translations = {
             title: "INICIO",
             welcome: "¡Te damos la bienvenida!",
             needToTrain: "Need to Train",
-            buildWeeklyPlan: "Armá tu plan semanal",
+            buildWeeklyPlan: "Arma tu plan semanal",
             subtitle: "Rutina del Día / Pasos Diarios",
             steps: "Pasos Diarios",
             todayWorkout: "Rutina de Hoy",
@@ -81,13 +81,16 @@ export const translations = {
             logoutConfirm: "¿Estás seguro de que querés salir de la app?",
             logoutBtn: "CERRAR SESIÓN",
             backToCalendar: "Ir al Calendario",
-            // CLAVES CORREGIDAS (Inglés)
             changePhoto: "Cambiar foto de perfil",
             permissionDenied: "Permiso denegado",
             permissionMessage:
                 "Necesitamos acceso a tus fotos para personalizar tu perfil.",
             successTitlePhoto: "¡Genial!",
             photoUpdated: "Foto actualizada correctamente.",
+            photoOptionsTitle: "Foto de perfil",
+            photoOptionsMessage: "¿Cómo quieres obtener tu foto?",
+            cameraOption: "Tomar foto",
+            galleryOption: "Elegir de la galería",
         },
         common: {
             cancel: "Cancelar",
@@ -203,13 +206,17 @@ export const translations = {
             logoutConfirm: "Are you sure you want to sign out?",
             logoutBtn: "SIGN OUT",
             backToCalendar: "Go to Calendar",
-            // NUEVAS CLAVES:
             changePhoto: "Change profile photo",
             permissionDenied: "Permission denied",
             permissionMessage:
                 "We need access to your photos to personalize your profile.",
             successTitlePhoto: "Great!",
             photoUpdated: "Photo updated successfully.",
+            photoOptionsTitle: "Profile photo",
+            photoOptionsMessage: "How do you want to get your photo?",
+            cameraOption: "Take photo",
+            galleryOption: "Choose from gallery",
+            
         },
         common: {
             cancel: "Cancel",

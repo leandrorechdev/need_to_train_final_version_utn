@@ -36,10 +36,9 @@ export default function ProfileScreen() {
     const [objetivo, setObjetivo] = useState("");
     const [image, setImage] = useState<string | null>(null); // Creamos un estado que guarda la URI (la dirección local de la foto).
 
-    const pickImage = async () => {
-        const { status } =
-            await ImagePicker.requestMediaLibraryPermissionsAsync();
-
+     // Lógica de Cámara
+    const launchCamera = async () => {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== "granted") {
             showModal(
                 t("profile.permissionDenied"),
@@ -49,44 +48,62 @@ export default function ProfileScreen() {
             );
             return;
         }
+        let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.5,
+        });
+        if (!result.canceled) setImage(result.assets[0].uri);
+    };
 
+    // Lógica de Galería
+    const launchGallery = async () => {
+        const { status } =
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+            showModal(
+                t("profile.permissionDenied"),
+                t("profile.permissionMessage"),
+                () => {},
+                "error",
+            );
+            return;
+        }
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             allowsEditing: true,
             aspect: [1, 1],
             quality: 0.5,
         });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-            showModal(
-                t("profile.successTitlePhoto"),
-                t("profile.photoUpdated"),
-                () => {},
-                "success",
-            );
-        }
+        if (!result.canceled) setImage(result.assets[0].uri);
     };
 
+    // Selector principal(con alert nativo)
+    const pickImage = () => {
+        Alert.alert(
+            t("profile.photoOptionsTitle"),
+            t("profile.photoOptionsMessage"),
+            [
+                { text: t("common.cancel"), style: "cancel" },
+                { text: t("profile.cameraOption"), onPress: launchCamera },
+                { text: t("profile.galleryOption"), onPress: launchGallery },
+            ],
+        );
+    };
+
+    // dejamos Alert nativo
     const handleLogout = () => {
         Alert.alert(t("profile.logoutTitle"), t("profile.logoutConfirm"), [
             { text: t("common.cancel"), style: "cancel" },
             {
                 text: t("common.exit"),
                 style: "destructive",
-                onPress: async () => {
-                    try {
-                        await signOut(auth);
-                    } catch (error) {
-                        console.error("Error signing out: ", error);
-                    }
-                },
+                onPress: async () => await signOut(auth),
             },
         ]);
     };
 
     const handleSave = () => {
-        // Modal global para feedback positivo
         showModal(
             t("profile.successTitle"),
             t("profile.successSave"),
@@ -101,9 +118,7 @@ export default function ProfileScreen() {
             contentContainerStyle={{ paddingBottom: 30 }}
         >
             <AccessibilityHeader />
-
             <View style={{ padding: 20 }}>
-                {/* Selector de Foto */}
                 <View style={styles.profileImageContainer}>
                     <TouchableOpacity
                         onPress={pickImage}
@@ -133,11 +148,11 @@ export default function ProfileScreen() {
                         {t("profile.changePhoto")}
                     </Text>
                 </View>
+
                 <View style={styles.sectionCard}>
                     <Text style={styles.sectionLabel}>
                         {t("profile.athleteData")}
                     </Text>
-
                     <Text style={styles.inputLabel}>
                         {t("profile.username")}
                     </Text>
@@ -167,6 +182,29 @@ export default function ProfileScreen() {
                     >
                         <Text style={styles.buttonText}>
                             {t("profile.saveBtn")}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={{
+                            marginTop: 25,
+                            padding: 12,
+                            alignItems: "center",
+                            borderWidth: 1,
+                            borderColor: colors.border,
+                            borderRadius: 12,
+                        }}
+                        onPress={() =>
+                            router.push("/(drawer)/(tabs)/calendar" as any)
+                        }
+                    >
+                        <Text
+                            style={{
+                                color: colors.textMuted,
+                                fontWeight: "600",
+                            }}
+                        >
+                            {t("profile.backToCalendar")}
                         </Text>
                     </TouchableOpacity>
                 </View>
